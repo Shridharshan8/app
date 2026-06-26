@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 import { Trophy, Coins, Sparkles, Home } from "lucide-react";
 
+const matchOverTitle = (youWon, opponentLeft) => {
+  if (youWon) return "VICTORY";
+  if (opponentLeft) return "FORFEIT WIN";
+  return "DEFEAT";
+};
+
 export default function MatchOverModal({ data, state, myPid, onClose }) {
   const youWon = data.winner_pid === myPid;
   const reward = youWon ? data.rewards?.winner : data.rewards?.loser;
@@ -42,7 +48,7 @@ export default function MatchOverModal({ data, state, myPid, onClose }) {
           className="mt-6 mb-3 font-heading text-4xl font-black uppercase"
           style={{ color: youWon ? "#c6ff00" : "#ff3b30" }}
         >
-          {youWon ? "VICTORY" : data.opponentLeft ? "FORFEIT WIN" : "DEFEAT"}
+          {matchOverTitle(youWon, data.opponentLeft)}
         </div>
 
         {data.opponentLeft && !youWon && (

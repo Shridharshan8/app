@@ -12,7 +12,8 @@ export const GameProvider = ({ children }) => {
     try {
       const raw = localStorage.getItem(LS_KEY);
       return raw ? JSON.parse(raw) : null;
-    } catch {
+    } catch (err) {
+      console.warn("Could not restore guest session:", err);
       return null;
     }
   });
@@ -31,8 +32,8 @@ export const GameProvider = ({ children }) => {
     try {
       const p = await getProfile(player.player_id);
       persist({ ...player, ...p });
-    } catch (e) {
-      // ignore
+    } catch (err) {
+      console.warn("Could not refresh profile:", err);
     }
   }, [player, persist]);
 
@@ -53,8 +54,8 @@ export const GameProvider = ({ children }) => {
     ws.onmessage = (evt) => {
       try {
         setWsMessage(JSON.parse(evt.data));
-      } catch {
-        // ignore
+      } catch (err) {
+        console.warn("Bad WS payload:", err);
       }
     };
     return ws;
@@ -73,8 +74,8 @@ export const GameProvider = ({ children }) => {
     if (wsRef.current) {
       try {
         wsRef.current.close();
-      } catch {
-        // ignore
+      } catch (err) {
+        console.warn("WS close error:", err);
       }
       wsRef.current = null;
     }

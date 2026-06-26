@@ -99,7 +99,7 @@ const CountBadge = ({ label, val, max, color, testid }) => (
     <div className="flex gap-0.5">
       {Array.from({ length: max + 1 }).map((_, i) => (
         <div
-          key={i}
+          key={`${label}-dot-${i}`}
           className="w-2 h-2 rounded-full"
           style={{
             background: i < val ? color : "rgba(255,255,255,0.15)",

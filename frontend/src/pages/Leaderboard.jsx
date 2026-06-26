@@ -37,13 +37,16 @@ export default function Leaderboard() {
             <div className="col-span-2 md:col-span-2 text-right">Wins</div>
             <div className="col-span-3 md:col-span-2 text-right">Coins</div>
           </div>
-          {loading ? (
+          {loading && (
             <div className="p-8 text-neutral-400 text-sm">Loading standings…</div>
-          ) : rows.length === 0 ? (
+          )}
+          {!loading && rows.length === 0 && (
             <div className="p-8 text-neutral-400 text-sm">
               No matches played yet. Be the first on the board.
             </div>
-          ) : (
+          )}
+          {!loading &&
+            rows.length > 0 &&
             rows.map((r, i) => {
               const me = player?.player_id === r.player_id;
               return (
@@ -74,8 +77,7 @@ export default function Leaderboard() {
                   </div>
                 </motion.div>
               );
-            })
-          )}
+            })}
         </div>
       </div>
     </div>

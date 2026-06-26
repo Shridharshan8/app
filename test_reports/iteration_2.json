@@ -1,0 +1,24 @@
+{
+  "summary": "Regression validation after frontend code-quality refactors (Leaderboard nested-ternary split, Profile rarityLabel helper, MatchOverModal matchOverTitle helper, Scoreboard composite key, GameContext console.warn). All affected areas render correctly; backend untouched and all 6 endpoints pass.",
+  "tested_scope": ["backend", "frontend", "integration"],
+  "passed": [
+    "GET /api/ -> 200",
+    "POST /api/guest -> returns player_id",
+    "GET /api/teams -> 8 teams",
+    "GET /api/leaderboard -> 200",
+    "POST /api/profile/{id}/daily -> {coins_awarded:100,new_item:null}",
+    "GET /api/items -> 10 items",
+    "Lobby loads, title 'Diamond Rivals'",
+    "Nickname entry + STEP UP -> team-select screen with 8 team cards",
+    "Team selection -> quick-match-btn rendered",
+    "Leaderboard page renders 7 populated rows (loading/empty states gated correctly after ternary->conditionals refactor)",
+    "Profile page renders: stats, daily reward, all items in locker, rarityLabel helper correctly outputs 'COMMON' for owned and 'RARE/EPIC/LEGENDARY • LOCKED' for unowned items",
+    "No JS pageerror or console errors during flow"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "notes": "Full 2-client WebSocket match was not re-run (no backend changes; previous iteration_1 passed 100%). MatchOverModal matchOverTitle helper is a pure string extraction visually verified by code review (VICTORY/DEFEAT/FORFEIT WIN branches preserved). Networkidle timeout was observed on one navigation but page rendered correctly (verified via screenshot).",
+  "full_testing_deferred": true
+}

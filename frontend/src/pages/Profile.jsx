@@ -161,7 +161,7 @@ export default function Profile() {
                   className="text-[10px] uppercase tracking-widest mt-1 font-bold"
                   style={{ color: RARITY_COLOR[it.rarity] }}
                 >
-                  {it.rarity} {owned ? "" : "• locked"}
+                  {rarityLabel(it.rarity, owned)}
                 </div>
               </motion.div>
             );
@@ -171,6 +171,11 @@ export default function Profile() {
     </div>
   );
 }
+
+const rarityLabel = (rarity, owned) => {
+  if (owned) return rarity;
+  return `${rarity} • locked`;
+};
 
 const StatBig = ({ label, val, color, icon: Icon }) => (
   <div className="glass rounded-2xl p-5">
