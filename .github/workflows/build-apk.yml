@@ -1,0 +1,61 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install --legacy-peer-deps
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Install Capacitor
+        working-directory: frontend
+        run: npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
+
+      - name: Initialize Capacitor config
+        working-directory: frontend
+        run: npx cap init "DiamondRivals" "com.shridhar.diamondrivals" --web-dir=build
+
+      - name: Add Android platform
+        working-directory: frontend
+        run: npx cap add android
+
+      - name: Sync web build into Android project
+        working-directory: frontend
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: frontend/android
+        run: chmod +x ./gradlew && ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: diamond-rivals-debug-apk
+          path: frontend/android/app/build/outputs/apk/debug/app-debug.apk
