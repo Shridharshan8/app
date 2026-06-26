@@ -1,0 +1,281 @@
+"""Curated seed dataset of MLB-style teams and players.
+
+These are fictional names inspired by real archetypes. Stats use a 30–99 scale.
+"""
+from __future__ import annotations
+
+REWARD_ITEMS = [
+    {"id": "classic_cap", "name": "Classic Cap", "rarity": "common", "icon": "Crown"},
+    {"id": "neon_bat", "name": "Neon Bat", "rarity": "rare", "icon": "Zap"},
+    {"id": "gold_glove", "name": "Gold Glove", "rarity": "epic", "icon": "Hand"},
+    {"id": "diamond_cleats", "name": "Diamond Cleats", "rarity": "epic", "icon": "Sparkles"},
+    {"id": "lightning_arm", "name": "Lightning Arm", "rarity": "legendary", "icon": "Bolt"},
+    {"id": "crown_helmet", "name": "Crown Helmet", "rarity": "legendary", "icon": "Crown"},
+    {"id": "phoenix_glove", "name": "Phoenix Glove", "rarity": "rare", "icon": "Flame"},
+    {"id": "stealth_spikes", "name": "Stealth Spikes", "rarity": "common", "icon": "Footprints"},
+    {"id": "rocket_arm", "name": "Rocket Arm", "rarity": "epic", "icon": "Rocket"},
+    {"id": "champion_ring", "name": "Champion Ring", "rarity": "legendary", "icon": "Award"},
+]
+
+
+def _b(name, role, power, contact, discipline, speed=60):
+    return {
+        "name": name,
+        "role": role,
+        "power": power,
+        "contact": contact,
+        "discipline": discipline,
+        "speed": speed,
+        "avg": round(0.220 + (contact - 50) / 250, 3),
+        "hr": int(power / 4),
+    }
+
+
+def _p(name, velocity, control, stuff, era=3.5):
+    return {
+        "name": name,
+        "role": "P",
+        "velocity": velocity,
+        "control": control,
+        "stuff": stuff,
+        "era": era,
+        # provide hitter-like stub stats for when pitcher bats (unused mostly)
+        "power": 40,
+        "contact": 40,
+        "discipline": 40,
+        "speed": 50,
+    }
+
+
+TEAMS = [
+    {
+        "id": "NYC",
+        "name": "Empire Bombers",
+        "city": "New York",
+        "color": "#0A2E5C",
+        "accent": "#E8B923",
+        "archetype": "Power Sluggers",
+        "rating": 92,
+        "roster": [
+            _b("J. Maddox", "1B", 94, 78, 72, 55),
+            _b("R. Castellanos", "RF", 88, 82, 70, 70),
+            _b("D. Pearson", "DH", 96, 70, 65, 50),
+            _b("L. Vega", "SS", 78, 88, 75, 82),
+            _b("M. Tanaka", "C", 72, 84, 80, 45),
+            _b("A. Bennett", "3B", 85, 76, 68, 60),
+            _b("S. Okafor", "CF", 70, 86, 78, 90),
+            _b("T. Brooks", "LF", 82, 80, 72, 68),
+            _b("K. Riley", "2B", 65, 82, 78, 78),
+            _p("C. Holland", 95, 82, 90, 2.85),
+        ],
+    },
+    {
+        "id": "LAX",
+        "name": "Coast Surge",
+        "city": "Los Angeles",
+        "color": "#005A9C",
+        "accent": "#EF3E42",
+        "archetype": "Balanced Pros",
+        "rating": 90,
+        "roster": [
+            _b("F. Mendoza", "RF", 90, 84, 76, 75),
+            _b("E. Park", "1B", 88, 80, 78, 50),
+            _b("N. Carter", "CF", 78, 88, 80, 92),
+            _b("R. Sato", "SS", 70, 90, 82, 80),
+            _b("V. Diaz", "3B", 86, 78, 72, 60),
+            _b("B. Cole", "DH", 92, 74, 70, 45),
+            _b("J. Owusu", "LF", 80, 82, 75, 70),
+            _b("M. Reyes", "C", 68, 85, 80, 48),
+            _b("D. Tran", "2B", 64, 84, 78, 76),
+            _p("Y. Nakamura", 92, 88, 88, 2.65),
+        ],
+    },
+    {
+        "id": "BOS",
+        "name": "Beacon Crows",
+        "city": "Boston",
+        "color": "#BD3039",
+        "accent": "#0C2340",
+        "archetype": "Contact Hitters",
+        "rating": 88,
+        "roster": [
+            _b("H. Whitman", "DH", 84, 92, 78, 50),
+            _b("G. Alvarez", "RF", 78, 88, 76, 72),
+            _b("P. Donovan", "SS", 72, 90, 82, 78),
+            _b("C. Mbeki", "CF", 76, 86, 80, 88),
+            _b("L. Russo", "1B", 86, 82, 72, 48),
+            _b("S. Kovacs", "3B", 80, 84, 74, 60),
+            _b("A. Yamamoto", "2B", 66, 88, 80, 75),
+            _b("R. Patel", "LF", 74, 86, 78, 70),
+            _b("M. Lopez", "C", 70, 84, 80, 45),
+            _p("T. Fitzgerald", 90, 86, 86, 3.10),
+        ],
+    },
+    {
+        "id": "CHI",
+        "name": "Wind Wolves",
+        "city": "Chicago",
+        "color": "#0E3386",
+        "accent": "#CC3433",
+        "archetype": "Speed & Defense",
+        "rating": 86,
+        "roster": [
+            _b("Q. Adebayo", "CF", 72, 84, 78, 96),
+            _b("J. Larsen", "SS", 76, 86, 80, 82),
+            _b("E. Velez", "2B", 68, 88, 78, 90),
+            _b("M. O'Connor", "LF", 78, 84, 76, 78),
+            _b("R. Singh", "RF", 82, 80, 74, 80),
+            _b("D. Kessler", "1B", 88, 76, 72, 50),
+            _b("F. Cortez", "3B", 80, 80, 74, 62),
+            _b("T. Hsieh", "C", 64, 82, 80, 45),
+            _b("B. Jameson", "DH", 92, 72, 68, 40),
+            _p("V. Ortega", 94, 80, 88, 2.95),
+        ],
+    },
+    {
+        "id": "ATL",
+        "name": "Peach Pirates",
+        "city": "Atlanta",
+        "color": "#13274F",
+        "accent": "#CE1141",
+        "archetype": "Young Guns",
+        "rating": 89,
+        "roster": [
+            _b("X. Romero", "RF", 92, 80, 72, 80),
+            _b("K. Adeyemi", "2B", 78, 86, 76, 88),
+            _b("S. Coleman", "3B", 88, 82, 74, 65),
+            _b("M. Davenport", "1B", 90, 78, 72, 50),
+            _b("R. Khalil", "CF", 76, 84, 78, 90),
+            _b("E. Park", "SS", 74, 86, 80, 78),
+            _b("J. Carter", "LF", 84, 80, 72, 70),
+            _b("L. Watanabe", "C", 70, 82, 80, 48),
+            _b("N. Pierre", "DH", 88, 76, 70, 45),
+            _p("A. Beltran", 96, 78, 92, 3.20),
+        ],
+    },
+    {
+        "id": "HOU",
+        "name": "Comet Crew",
+        "city": "Houston",
+        "color": "#002D62",
+        "accent": "#EB6E1F",
+        "archetype": "Analytics Edge",
+        "rating": 91,
+        "roster": [
+            _b("A. Brantley", "2B", 78, 92, 82, 78),
+            _b("Y. Cho", "SS", 80, 90, 84, 80),
+            _b("R. Marquez", "1B", 92, 82, 74, 50),
+            _b("J. Sterling", "DH", 90, 80, 78, 45),
+            _b("E. Okonkwo", "CF", 76, 86, 80, 88),
+            _b("D. Vargas", "RF", 84, 84, 76, 72),
+            _b("M. Bauer", "3B", 86, 78, 74, 60),
+            _b("S. Iwata", "C", 72, 84, 82, 48),
+            _b("T. Quinn", "LF", 80, 82, 76, 70),
+            _p("R. Greene", 93, 90, 90, 2.50),
+        ],
+    },
+    {
+        "id": "SDX",
+        "name": "Harbor Wave",
+        "city": "San Diego",
+        "color": "#2F241D",
+        "accent": "#FFC425",
+        "archetype": "Underdog Spark",
+        "rating": 84,
+        "roster": [
+            _b("C. Mendez", "SS", 86, 84, 76, 88),
+            _b("J. Ruiz", "RF", 88, 80, 74, 72),
+            _b("M. Tate", "1B", 84, 82, 76, 50),
+            _b("E. Hassan", "CF", 74, 84, 80, 92),
+            _b("L. Becker", "3B", 80, 80, 74, 60),
+            _b("D. Cho", "2B", 68, 86, 80, 80),
+            _b("R. Akinyemi", "DH", 92, 76, 70, 45),
+            _b("T. Volkov", "LF", 78, 82, 74, 70),
+            _b("S. Park", "C", 66, 80, 80, 46),
+            _p("J. Knight", 91, 84, 86, 3.30),
+        ],
+    },
+    {
+        "id": "TOK",
+        "name": "Tokyo Tides",
+        "city": "Tokyo",
+        "color": "#1A237E",
+        "accent": "#FF4081",
+        "archetype": "Precision Squad",
+        "rating": 87,
+        "roster": [
+            _b("H. Suzuki", "RF", 80, 92, 84, 80),
+            _b("K. Tanaka", "CF", 74, 88, 82, 90),
+            _b("R. Ishida", "SS", 76, 86, 84, 78),
+            _b("Y. Ando", "1B", 86, 84, 78, 50),
+            _b("M. Kojima", "3B", 82, 82, 76, 60),
+            _b("S. Watanabe", "2B", 68, 88, 82, 76),
+            _b("T. Nakagawa", "DH", 90, 78, 72, 45),
+            _b("E. Mori", "LF", 78, 84, 78, 70),
+            _b("A. Hayashi", "C", 70, 86, 84, 48),
+            _p("D. Yoshida", 90, 92, 88, 2.40),
+        ],
+    },
+]
+
+
+# ===== Templated commentary =====
+COMMENTARY = {
+    "BALL": [
+        "Ball — just outside.",
+        "Off the plate. {batter} lays off.",
+        "Wide of the zone — ball.",
+    ],
+    "STRIKE_LOOKING": [
+        "Strike! {batter} watches it go by.",
+        "Right down the middle — caught looking!",
+        "Painted on the corner. Strike called.",
+    ],
+    "STRIKE_SWINGING": [
+        "Swing and a miss!",
+        "{batter} whiffs on it.",
+        "{pitcher} blows it past {batter}!",
+    ],
+    "FOUL": [
+        "Fouled off the side.",
+        "{batter} fouls it back.",
+        "Just foul — count stays.",
+    ],
+    "OUT": [
+        "Routine grounder — one away.",
+        "Pop up — easy catch.",
+        "Lined right at the fielder! Out.",
+        "{batter} hits it sharply — but RIGHT AT them. Out.",
+    ],
+    "STRIKEOUT": [
+        "STRUCK HIM OUT! {pitcher} dominates.",
+        "Three strikes — {batter} is gone!",
+        "Punched out by {pitcher}!",
+    ],
+    "WALK": [
+        "Ball four — {batter} trots to first.",
+        "Free pass. {pitcher} loses the zone.",
+        "Walked. Bases activated.",
+    ],
+    "SINGLE": [
+        "Base hit into shallow right!",
+        "Bloop single by {batter}.",
+        "Sharp single up the middle.",
+    ],
+    "DOUBLE": [
+        "Ripped into the gap — double!",
+        "{batter} lines a two-bagger!",
+        "Off the wall — double!",
+    ],
+    "TRIPLE": [
+        "Triple! {batter} flies into third!",
+        "Deep to the corner — triple!",
+        "Hustle play — {batter} stretches it to a triple!",
+    ],
+    "HOMER": [
+        "GONE! {batter} crushes one over the wall!",
+        "SEE YA! Bomb off {pitcher}!",
+        "TOWERING SHOT — into the seats!",
+        "Goodbye baseball! {batter} goes deep!",
+    ],
+}

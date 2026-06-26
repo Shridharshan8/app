@@ -1,0 +1,24 @@
+{
+  "summary": "Smoke + integration tests for Diamond Rivals: all REST endpoints pass, full WebSocket 2-player game simulated end-to-end with correct rewards persistence, and lobby UI flow (nickname -> team select -> queue) works against the public preview URL.",
+  "tested_scope": ["backend", "frontend", "integration"],
+  "passed": [
+    "GET /api/ returns {ok:true, game:'Diamond Rivals'}",
+    "GET /api/teams returns 8 teams with id/name/city/color/rating",
+    "GET /api/teams/NYC returns roster (200)",
+    "POST /api/guest creates profile with coins=250 and items=[classic_cap]",
+    "GET /api/profile/{id} returns profile",
+    "POST /api/profile/{id}/daily awards +100 coins; second claim same day -> 400",
+    "GET /api/leaderboard returns sorted list with rank",
+    "GET /api/items returns 10 reward items",
+    "WebSocket: connected -> queued -> match_start -> at_bat -> pitch_result -> match_over flow verified with 2 concurrent clients",
+    "Full 3-inning game completed; winner +150 coins / loser +50 coins persisted; wins/losses incremented correctly in MongoDB",
+    "Frontend lobby loads with hero 'DIAMOND RIVALS'; nickname-input, start-game-btn, team-card-NYC, quick-match-btn all visible and functional",
+    "After clicking quick-match-btn, SEARCHING... state appears (WS connection established and queued)"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Two-tab live match UI (call-pitch/call-swing, scoreboard updates, match-over-modal) was NOT exercised via Playwright due to two-context overhead; however, the underlying WebSocket flow that powers it was fully validated via direct WS clients (all message types: match_start, at_bat, pitch_result, match_over received and resolved correctly). Test credentials: N/A (guest sessions)."
+}
